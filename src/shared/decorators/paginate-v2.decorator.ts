@@ -7,5 +7,5 @@ export const PaginateV2 = createParamDecorator(
     const request: any = ctx.switchToHttp().getRequest();
     const paginate = request.paginate; //TODO ya viene con esta propiedad
     return paginate;
-  },
+  }
 );

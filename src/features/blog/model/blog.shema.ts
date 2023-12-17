@@ -12,7 +12,6 @@ export class Blog {
   @Prop({ required: true })
   title: string;
 
-
   @Prop({ required: true })
   idAuthor: mongoose.Types.ObjectId;
   // idAuthor: string;

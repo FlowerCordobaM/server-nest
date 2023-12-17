@@ -6,5 +6,5 @@ export const storage = diskStorage({
     const extension = file.originalname.split('.').pop(); //TODO png
     const name = `${Date.now()}.${extension}`; //TODO 213131231.png
     cb(null, name);
-  },
+  }
 });

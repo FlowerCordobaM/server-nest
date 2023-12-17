@@ -9,7 +9,7 @@ import { Model } from 'mongoose';
 @Injectable()
 export class VideosService {
   constructor(
-    @InjectModel(Video.name) private readonly videoModel: Model<VideoDocument>,
+    @InjectModel(Video.name) private readonly videoModel: Model<VideoDocument>
   ) {}
   async create(createVideoDto: CreateVideoDto) {
     // const user = await this.userModel.find({}).exec(); // Esto devuelve los datos reales

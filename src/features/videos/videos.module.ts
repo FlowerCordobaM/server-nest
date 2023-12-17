@@ -9,11 +9,11 @@ import { User, UserSchema } from '../user/model/user.scheme';
   imports: [
     MongooseModule.forFeature([
       { name: Video.name, schema: VideoSchema },
-      { name: User.name, schema: UserSchema },
-    ]),
+      { name: User.name, schema: UserSchema }
+    ])
   ],
 
   controllers: [VideosController],
-  providers: [VideosService],
+  providers: [VideosService]
 })
 export class VideosModule {}

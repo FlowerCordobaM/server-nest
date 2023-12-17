@@ -9,17 +9,17 @@ export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
   canActivate(
-    context: ExecutionContext,
+    context: ExecutionContext
   ): boolean | Promise<boolean> | Observable<boolean> {
     const getRolMeta = this.reflector.get<string[]>(
-      'rol', 
-      context.getHandler(),
+      'rol',
+      context.getHandler()
     );
 
     // console.log('Required roles:', getRolMeta);
 
     const req = context.switchToHttp().getRequest();
-    const user = req.user; 
+    const user = req.user;
     // Cambio aquí    console.log('User in request:', user);
 
     // Verifica si el usuario está autenticado y tiene la propiedad 'roles'
