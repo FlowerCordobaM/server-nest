@@ -13,8 +13,13 @@ export class Blog {
   title: string;
 
   @Prop({ required: true })
-  // idAuthor: mongoose.Types.ObjectId;
   idAuthor: string;
+
+  @Prop({ required: true })
+  idCategorie: string;
+
+  @Prop({ required: true })
+  idTag: string;
 
   @Prop()
   description: string;
@@ -25,31 +30,30 @@ export class Blog {
 
 export const BlogSchema = SchemaFactory.createForClass(Blog);
 
-// BlogSchema.statics.findAllCourses = function () {
-//   const list = this.aggregate([
-//     {
-//       $lookup: {
-//         from: 'users', //TODO
-//         foreignField: 'id',
-//         localField: 'idAuthor',
-//         as: 'author',
-//         pipeline: [
-//           //TODO esto actuando sobre la collection de users
-//           {
-//             $project: {
-//               _id: 0,
-//               name: 1,
-//               email: 1,
-//               avatar: 1,
-//             },
-//           },
-//         ],
-//       },
-//     },
-//     {
-//       $unwind: '$author',
-//     },
-//   ]);
+BlogSchema.statics.findAllBlog = function () {
+  const list = this.aggregate([
+    {
+      $lookup: {
+        from: 'users', //TODO
+        foreignField: 'id',
+        localField: 'idAuthor',
+        as: 'author',
+        pipeline: [
+          //TODO esto actuando sobre la collection de users
+          {
+            $project: {
+              _id: 0,
+              name: 1,
+              avatar: 1
+            }
+          }
+        ]
+      }
+    },
+    {
+      $unwind: '$author'
+    }
+  ]);
 
-//   return list;
-// };
+  return list;
+};
