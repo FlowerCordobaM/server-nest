@@ -9,4 +9,6 @@ export interface ModelExt<T> extends Model<T> {
   // eslint-disable-next-line @typescript-eslint/ban-types
   findAllVideo: Function;
   findAllTags: Function;
+  findAllCategories: Function;
+  findAllBlog: Function;
 }
