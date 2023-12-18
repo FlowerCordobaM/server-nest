@@ -12,13 +12,11 @@ export class Video {
   @Prop()
   title: string;
 
-
   @Prop({ required: true })
   idAuthor: string;
 
   @Prop({ required: true })
   idBlog: string;
-
 
   @Prop()
   description: string;
@@ -30,7 +28,6 @@ export class Video {
   score: number;
 }
 export const VideoSchema = SchemaFactory.createForClass(Video);
-
 
 VideoSchema.statics.findAllVideo = function () {
   const list = this.aggregate([
@@ -47,15 +44,15 @@ VideoSchema.statics.findAllVideo = function () {
               _id: 0,
               name: 1,
               description: 1,
-              avatar: 1,
-            },
-          },
-        ],
-      },
+              avatar: 1
+            }
+          }
+        ]
+      }
     },
     {
-      $unwind: '$author',
-    },
+      $unwind: '$author'
+    }
   ]);
 
   return list;
