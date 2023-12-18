@@ -6,7 +6,6 @@ import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handleba
   imports: [
     MailerModule.forRootAsync({
       useFactory: () => {
-        console.log(process.env.MAIL_HOST);
         return {
           transport: {
             host: process.env.MAIL_HOST,

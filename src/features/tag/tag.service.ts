@@ -1,26 +1,46 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable } from '@nestjs/common';
 import { CreateTagDto } from './dto/create-tag.dto';
 import { UpdateTagDto } from './dto/update-tag.dto';
+import { Tag, TagDocument } from './model/tag.scheme';
+import { InjectModel } from '@nestjs/mongoose';
+import { ModelExt } from 'src/shared/interfaces/shared.interfaces';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class TagService {
-  create(createTagDto: CreateTagDto) {
-    return 'This action adds a new tag';
+  constructor(
+    @InjectModel(Tag.name)
+    private readonly tagModel: ModelExt<TagDocument>
+  ) {}
+  async create(createTagDto: CreateTagDto) {
+    const data = await this.tagModel.create(createTagDto); // Esto también es una promesa
+    return { data };
   }
 
-  findAll() {
-    return `This action returns all tag`;
+  async findAll() {
+    const listData = this.tagModel.findAllTags();
+    return listData;
+  }
+  async findAllDate() {
+    const listData = this.tagModel.find({});
+    return listData;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} tag`;
+    return this.tagModel.findOne({ id });
   }
 
-  update(id: number, updateTagDto: UpdateTagDto) {
-    return `This action updates a #${id} tag`;
+  async update(id: string, updateTagDto: UpdateTagDto) {
+    return this.tagModel.findOneAndUpdate({ id }, updateTagDto, {
+      upsert: true,
+      new: true
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} tag`;
+  async remove(id: string) {
+    const _id = new Types.ObjectId(id);
+    const resp = this.tagModel.delete({ _id });
+    return resp;
   }
 }
