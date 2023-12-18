@@ -34,7 +34,7 @@ import { Rol } from 'src/shared/decorators/rol.decorator';
 export class VideosController {
   constructor(private readonly videosService: VideosService) {}
   @ApiBearerAuth()
-  @UseGuards(JwtGuard, RolesGuard)
+  // @UseGuards(JwtGuard, RolesGuard)
   @Post()
   @HttpCode(201)
   @Rol(['admin'])
@@ -51,37 +51,50 @@ export class VideosController {
   @ApiBearerAuth()
   @UseGuards(JwtGuard, RolesGuard)
   @Rol(['admin'])
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('avatar', { storage }))
+  @Post('upload/:id')
+  @UseInterceptors(FileInterceptor('file', { storage }))
   @HttpCode(201)
   upload(@UploadedFile() file: Express.Multer.File) {
     console.log(file);
   }
 
-  @Get()
+  // @UseGuards(JwtGuard, RolesGuard)
+  // @Rol(['admin', 'user'])
+  @Get('')
   @HttpCode(200)
   findAll() {
+    return this.videosService.findAllDate();
+  }
+  // @UseGuards(JwtGuard, RolesGuard)
+  // @Rol(['admin', 'user'])
+  @Get('user/:id')
+  @HttpCode(200)
+  findAllUser() {
     return this.videosService.findAll();
   }
 
-  @Get(':title')
+  // @UseGuards(JwtGuard, RolesGuard)
+  // @Rol(['admin', 'user'])
+  @Get(':id')
   @HttpCode(200)
-  findOne(@Param('title', new SlugPipe()) title: string) {
-    console.log(title);
-    return this.videosService.findOne(1);
+  findOne(@Param('id', new SlugPipe()) id: string) {
+    console.log(+id);
+    return this.videosService.findOne(id);
   }
   @ApiBearerAuth()
-  @UseGuards(JwtGuard)
-  @Rol(['admin', 'manager'])
+  // @UseGuards(JwtGuard)
+  // @Rol(['admin', 'manager'])
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateVideoDto: UpdateVideoDto) {
-    return this.videosService.update(+id, updateVideoDto);
+    return this.videosService.update(id, updateVideoDto);
   }
+
   @ApiBearerAuth()
   @UseGuards(JwtGuard, RolesGuard)
   @Rol(['admin'])
+  @HttpCode(200)
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.videosService.remove(+id);
+    return this.videosService.remove(id);
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Module } from '@nestjs/common';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -12,12 +13,12 @@ import { join } from 'path';
     FeaturesModule,
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRoot(process.env.DB_URI, {
-      // connectionFactory: (connection) => {
-      //   connection.plugin(require('mongoose-delete'), {
-      //     overrideMethods: 'all',
-      //   });
-      //   return connection;
-      // },
+      connectionFactory: (connection) => {
+        connection.plugin(require('mongoose-delete'), {
+          overrideMethods: 'all'
+        });
+        return connection;
+      }
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'src/client')

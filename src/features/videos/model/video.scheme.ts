@@ -12,8 +12,13 @@ export class Video {
   @Prop()
   title: string;
 
-  // @Prop({ required: true })
-  // idBlog: mongoose.Types.ObjectId;
+
+  @Prop({ required: true })
+  idAuthor: string;
+
+  @Prop({ required: true })
+  idBlog: string;
+
 
   @Prop()
   description: string;
@@ -25,3 +30,33 @@ export class Video {
   score: number;
 }
 export const VideoSchema = SchemaFactory.createForClass(Video);
+
+
+VideoSchema.statics.findAllVideo = function () {
+  const list = this.aggregate([
+    {
+      $lookup: {
+        from: 'users', //TODO
+        foreignField: 'id',
+        localField: 'idAuthor',
+        as: 'author',
+        pipeline: [
+          //TODO esto actuando sobre la collection de users
+          {
+            $project: {
+              _id: 0,
+              name: 1,
+              description: 1,
+              avatar: 1,
+            },
+          },
+        ],
+      },
+    },
+    {
+      $unwind: '$author',
+    },
+  ]);
+
+  return list;
+};

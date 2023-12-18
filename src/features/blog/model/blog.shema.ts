@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose, { Document } from 'mongoose';
+import  { Document } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 export type BlogDocument = Blog & Document;
 
@@ -13,8 +13,8 @@ export class Blog {
   title: string;
 
   @Prop({ required: true })
-  idAuthor: mongoose.Types.ObjectId;
-  // idAuthor: string;
+  // idAuthor: mongoose.Types.ObjectId;
+  idAuthor: string;
 
   @Prop()
   description: string;
@@ -23,9 +23,9 @@ export class Blog {
   cover: string;
 }
 
-export const CourseSchema = SchemaFactory.createForClass(Blog);
+export const BlogSchema = SchemaFactory.createForClass(Blog);
 
-// CourseSchema.statics.findAllCourses = function () {
+// BlogSchema.statics.findAllCourses = function () {
 //   const list = this.aggregate([
 //     {
 //       $lookup: {
