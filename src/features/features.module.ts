@@ -7,6 +7,7 @@ import { EventModule } from './event/mail.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { EmailModule } from './email/email.module';
 import { TagModule } from './tag/tag.module';
+import { CategorieModule } from './categorie/categorie.module';
 
 @Module({
   imports: [
@@ -17,7 +18,8 @@ import { TagModule } from './tag/tag.module';
     AuthModule,
     EventModule,
     EmailModule,
-    TagModule
+    TagModule,
+    CategorieModule
   ]
 })
 export class FeaturesModule {}

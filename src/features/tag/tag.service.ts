@@ -27,7 +27,7 @@ export class TagService {
     return listData;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return this.tagModel.findOne({ id });
   }
 
