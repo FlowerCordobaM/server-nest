@@ -8,7 +8,7 @@ export class CreateBlogDto {
 
   @ApiProperty()
   @IsUUID()
-  idCategory: string;
+  idCategorie: string;
 
   @ApiProperty()
   @IsUUID()
